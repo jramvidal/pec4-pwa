@@ -1,0 +1,62 @@
+<div class="detail-container animate__animated animate__fadeIn">
+  @if (meal) {
+    <div class="header">
+      <h1>{{ meal.strMeal }}</h1>
+      <button mat-raised-button color="warn" routerLink="/">
+        <mat-icon>arrow_back</mat-icon> BACK
+      </button>
+    </div>
+
+    <div class="main-content">
+      <img [src]="meal.strMealThumb" [alt]="meal.strMeal" class="detail-image shadow">
+      
+      <div class="info-block">
+        <p><strong>Category:</strong> {{ meal.strCategory }}</p>
+        <p><strong>Place of origin:</strong> {{ meal.strArea }}</p>
+        
+        <div class="actions">
+          <button mat-flat-button color="primary" (click)="toggleDetails()">
+            {{ showDetails ? 'Hide details' : 'Show all details' }}
+          </button>
+        </div>
+      </div>
+    </div>
+
+    @if (showDetails) {
+      <div class="extended-details animate__animated animate__slideInUp">
+        <mat-progress-bar mode="determinate" value="100" class="mb-3"></mat-progress-bar>
+        
+        <mat-tab-group animationDuration="500ms" dynamicHeight>
+          <mat-tab label="Ingredients">
+            <div class="tab-content">
+              <mat-chip-set>
+                @for (ing of ingredients; track $index) {
+                  <mat-chip>{{ ing }}</mat-chip>
+                }
+              </mat-chip-set>
+            </div>
+          </mat-tab>
+
+          <mat-tab label="Instructions">
+            <div class="tab-content instructions">
+              <p>{{ meal.strInstructions }}</p>
+            </div>
+          </mat-tab>
+          
+          @if (meal.strYoutube) {
+             <mat-tab label="Video">
+                <div class="tab-content">
+                  <a mat-button color="accent" [href]="meal.strYoutube" target="_blank">
+                    Watch on YouTube <mat-icon>open_in_new</mat-icon>
+                  </a>
+                </div>
+             </mat-tab>
+          }
+        </mat-tab-group>
+      </div>
+    }
+
+  } @else {
+    <div class="loading">Loading recipe…</div>
+  }
+</div>

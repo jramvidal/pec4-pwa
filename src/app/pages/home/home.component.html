@@ -1,0 +1,37 @@
+<div class="container">
+  <div class="header-actions">
+    <h1>Seafood Recipes</h1>
+    
+    <mat-button-toggle-group [value]="viewMode" (change)="setView($event.value)" aria-label="View mode">
+      <mat-button-toggle value="cards">
+        <mat-icon>grid_view</mat-icon> Cards
+      </mat-button-toggle>
+      <mat-button-toggle value="grid">
+        <mat-icon>table_rows</mat-icon> Table
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
+
+  @if (loading) {
+    <div class="spinner-container">
+      <mat-spinner></mat-spinner>
+    </div>
+  } @else {
+    
+    <div class="animate__animated animate__fadeIn">
+      
+      @if (viewMode === 'cards') {
+        <div class="cards-container">
+          @for (meal of meals; track meal.idMeal) {
+            <app-meal-card [meal]="meal"></app-meal-card>
+          }
+        </div>
+      }
+
+      @if (viewMode === 'grid') {
+        <app-meal-grid [meals]="meals"></app-meal-grid>
+      }
+
+    </div>
+  }
+</div>
